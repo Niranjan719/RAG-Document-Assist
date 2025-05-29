@@ -6,4 +6,5 @@ python-dotenv
 langchain-community
 beautifulsoup4
 tiktoken
+streamlit
 

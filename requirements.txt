@@ -7,4 +7,5 @@ langchain-community
 beautifulsoup4
 tiktoken
 streamlit
+black
 

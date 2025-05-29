@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+
 load_dotenv()
 
 from langchain_community.document_loaders import ReadTheDocsLoader
@@ -11,21 +12,28 @@ import tiktoken
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 ENCODER = tiktoken.encoding_for_model("text-embedding-3-small")
 
+
 def num_tokens_from_string(text: str) -> int:
     """Returns the number of tokens in a text string."""
     return len(ENCODER.encode(text))
 
+
 def safe_split(documents, max_tokens=500):
     """Ensure each document is below the Pinecone size limit."""
-    splitter = TokenTextSplitter(encoding_name="cl100k_base", chunk_size=max_tokens, chunk_overlap=50)
+    splitter = TokenTextSplitter(
+        encoding_name="cl100k_base", chunk_size=max_tokens, chunk_overlap=50
+    )
     safe_docs = []
     for doc in documents:
         split_docs = splitter.split_documents([doc])
         safe_docs.extend(split_docs)
     return safe_docs
 
+
 def ingest_docs():
-    loader = ReadTheDocsLoader("langchain-docs/api.python.langchain.com/en/latest", encoding='utf-8')
+    loader = ReadTheDocsLoader(
+        "langchain-docs/api.python.langchain.com/en/latest", encoding="utf-8"
+    )
     raw_documents = loader.load()
     print(f"Loaded {len(raw_documents)} raw documents")
 
@@ -41,7 +49,7 @@ def ingest_docs():
     print("Uploading in batches to avoid size limits...")
     batch_size = 50
     for i in range(0, len(documents), batch_size):
-        batch = documents[i:i+batch_size]
+        batch = documents[i : i + batch_size]
         PineconeVectorStore.from_documents(
             batch, embeddings, index_name="langchain-doc-index"
         )
@@ -51,6 +59,7 @@ def ingest_docs():
 
     # Loaded 344 raw documents
     # After splitting, 1885 documents to embed
+
 
 if __name__ == "__main__":
     ingest_docs()

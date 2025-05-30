@@ -167,4 +167,5 @@ if st.session_state["chat_answers_history"]:
             st.markdown(f'<div class="message user">👤 {user_query}</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="message bot">🤖 {generated_response}</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
+        # small change
 

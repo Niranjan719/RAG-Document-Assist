@@ -3,6 +3,9 @@ from langchain.chains.history_aware_retriever import create_history_aware_retrie
 from langchain.chains.retrieval import create_retrieval_chain
 import os
 from typing import Any, Dict, List
+
+from langchain_core.prompts import ChatPromptTemplate
+
 load_dotenv()
 
 from langchain import hub
@@ -23,10 +26,17 @@ def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):
     )
     chat = ChatOpenAI(verbose=True, temperature=0, model="gpt-4o-mini")
 
-    retrieval_qa_chat_prompt = hub.pull("langchain-ai/retrieval-qa-chat")
+    # retrieval_qa_chat_prompt = hub.pull("langchain-ai/retrieval-qa-chat")
+    retrieval_qa_chat_prompt = ChatPromptTemplate.from_messages([
+        ("system",
+         "You are a helpful assistant. Always answer the user's questions using only the information provided in the context. "
+         "If the context does not contain the answer, respond with: 'No information is available related to it.'"),
+        ("human", "{input}\n\nContext:\n{context}")
+    ])
     stuff_documents_chain = create_stuff_documents_chain(chat, retrieval_qa_chat_prompt)
-
+    # hub.pull("langchain-ai/chat-langchain-rephrase")
     rephrase_prompt = hub.pull("langchain-ai/chat-langchain-rephrase")
+
 
     history_aware_retriever = create_history_aware_retriever(
         llm=chat, retriever=docsearch.as_retriever(), prompt=rephrase_prompt

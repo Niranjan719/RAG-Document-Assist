@@ -34,7 +34,7 @@ def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):
 
 
     qa = create_retrieval_chain(
-        retriever=docsearch.as_retriever(), combine_docs_chain=stuff_documents_chain
+        retriever=history_aware_retriever, combine_docs_chain=stuff_documents_chain
     )
     result = qa.invoke(input={"input": query, "chat_history": chat_history})
     new_result = {

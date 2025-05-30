@@ -1,0 +1,18 @@
+In LangChain, the primary difference between a Function Calling Agent and a ReAct Agent lies in their design and operational approach to handling tasks.
+Function Calling Agent:
+
+Purpose: This type of agent is specifically optimized for executing predefined functions. It is designed to interact with APIs or perform specific actions based on the input it receives.
+Mechanism: The Function Calling Agent uses a structured approach where it identifies the appropriate function to call based on the user's request. It can handle multiple functions and is particularly useful when the tasks are well-defined and can be mapped to specific functions.
+Use Cases: Ideal for scenarios where the agent needs to perform specific actions like querying a database, making API calls, or executing commands that have a clear structure.
+ReAct Agent:
+
+Purpose: The ReAct Agent is built on the principles of reasoning and acting, as outlined in the ReAct paper. It combines reasoning steps with actions, allowing the agent to think through a problem before taking action.
+Mechanism: This agent employs a reasoning process where it first analyzes the input, generates a plan, and then decides on the actions to take. It can utilize various tools and has a more flexible approach to problem-solving, making it suitable for complex queries that require understanding and reasoning.
+Use Cases: Best suited for tasks that involve complex decision-making, where the agent needs to break down a problem into simpler components, reason through them, and then act accordingly.
+In summary, while the Function Calling Agent is focused on executing specific functions efficiently, the ReAct Agent emphasizes a reasoning process before taking action, making it more adaptable to complex scenarios. Understanding these differences can help in selecting the appropriate agent type based on the task requirements.
+
+Sources:
+https:/\api.python.langchain.com\en\latest\agents\langchain.agents.agent_types.AgentType.html
+https:/\api.python.langchain.com\en\latest\agents\langchain.agents.react.agent.create_react_agent.html
+https:/\api.python.langchain.com\en\latest\agents\langchain.agents.react.base.ReActChain.html
+https:/\api.python.langchain.com\en\latest\langchain_api_reference.html
